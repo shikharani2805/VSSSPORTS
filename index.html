@@ -30,6 +30,14 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+
+    <!-- EmailJs script to send email -->
+    <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function(){
+            emailjs.init("a0EZ8u7L_a88mY_-t"); // Replace 'YOUR_USER_ID' with your EmailJS user ID
+        })();
+    </script>
 </head>
 
 <body>
@@ -158,8 +166,8 @@
                         <div class="row justify-content-center">
                             <div class="col-12 col-lg-8 text-center">
                                 <h5 class="text-white text-uppercase mb-3 animated slideInDown">Welcome To VS SPOORTS</h5>
-                                <h1 class="display-3 text-white animated slideInDown mb-4">Importer or exporter</h1>
-                                <p class="fs-5 fw-medium text-white mb-4 pb-2">VS SPORTS is the biggest Sports Flooring dealer & impoter in India.</p>
+                                <h1 class="display-3 text-white animated slideInDown mb-4">VS SPORTS is the biggest Sports Flooring dealer & impoter in India.</h1>
+                                <!-- <p class="fs-5 fw-medium text-white mb-4 pb-2">VS SPORTS is the biggest Sports Flooring dealer & impoter in India.</p> -->
                                 <!-- <a href="" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Read More</a>
                                 <a href="" class="btn btn-light py-md-3 px-md-5 animated slideInRight">Free Quote</a> -->
                             </div>
@@ -562,33 +570,48 @@
                             <h1 class="display-5 mb-4">Contact Us</h1>
                         </div>
                         <p class="mb-4 pb-2">For Outdoor and Indoor sports courts like Lawn Tennis, Basketball, Volleyball, Badminton, Skating Ring and Multipurpose courts.</p>
-                        <form>
+                        <form id="contact-form">
                             <div class="row g-3">
                                 <div class="col-12 col-sm-6">
-                                    <input type="text" class="form-control border-0" placeholder="Name" style="height: 55px;">
+                                    <input type="text" class="form-control border-0" placeholder="Name" name="user_name" style="height: 55px;" required>
                                 </div>
                                 <div class="col-12 col-sm-6">
-                                    <input type="email" class="form-control border-0" placeholder="Email" style="height: 55px;">
+                                    <input type="email" class="form-control border-0" placeholder="Email" name="user_email_id" style="height: 55px;" required>
                                 </div>
                                 <div class="col-12 col-sm-6">
-                                    <input type="text" class="form-control border-0" placeholder="Mobile" style="height: 55px;">
+                                    <input type="tel" class="form-control border-0" placeholder="Mobile" name="phone_number" pattern="[0-9]{10}" style="height: 55px;" required>
                                 </div>
-                                <!-- <div class="col-12 col-sm-6">
-                                    <select class="form-select border-0" style="height: 55px;">
-                                        <option selected>Select A Service</option>
-                                        <option value="1">Service 1</option>
-                                        <option value="2">Service 2</option>
-                                        <option value="3">Service 3</option>
-                                    </select>
-                                </div> -->
                                 <div class="col-12">
-                                    <textarea class="form-control border-0" placeholder="Query"></textarea>
+                                    <textarea class="form-control border-0" placeholder="Query" name="message" required></textarea>
                                 </div>
                                 <div class="col-12">
                                     <button class="btn btn-primary w-100 py-3" type="submit">Submit</button>
                                 </div>
                             </div>
                         </form>
+                        <script type="text/javascript">
+                            document.getElementById('contact-form').addEventListener('submit', function(event) {
+                                event.preventDefault(); // Prevent default form submission
+
+                                // Additional client-side validation (if needed)
+                                var userName = document.querySelector('input[name="user_name"]').value;
+                                var userEmail = document.querySelector('input[name="user_email_id"]').value;
+                                var userPhone = document.querySelector('input[name="phone_number"]').value;
+                                var userMessage = document.querySelector('textarea[name="message"]').value;
+
+                                if (userName && userEmail && userPhone && userMessage) {
+                                    emailjs.sendForm('service_l31glb2', 'template_oe62s59', this)
+                                        .then(function() {
+                                            alert('Your message has been sent successfully!');
+                                            document.getElementById('contact-form').reset(); // Reset the form fields
+                                        }, function(error) {
+                                            alert('Failed to send the message. Please try again later.');
+                                        });
+                                } else {
+                                    alert('Please fill all the fields correctly.');
+                                }
+                            });
+                        </script>
                     </div>
                 </div>
             </div>
@@ -820,3 +843,4 @@
 </body>
 
 </html>
+
